@@ -1,0 +1,31 @@
+import sys
+from dbt.main import main
+import subprocess
+
+def execute(command):
+    popen = subprocess.Popen(command, stdout=subprocess.PIPE, bufsize=1, shell=True)
+    lines_iterator = iter(popen.stdout.readline, b"")
+    is_success = False
+    while popen.poll() is None:
+        for line in lines_iterator:
+            nline = line.rstrip()
+            print(nline.decode("latin"), end = "\r\n",flush =True) # yield line
+            if 'Completed successfully' in nline.decode("latin"):
+                is_success = True
+    if is_success:
+        sys.exit(0)
+    else:
+        sys.exit(1)
+
+if __name__ == '__main__':
+    try:
+        argv = sys.argv
+        argv = argv[1:]
+        execute(f"python /opt/airflow/dags/dbt_modules/dbt_wap {' '.join(argv)}")
+    except SystemExit as se:
+        print(se)
+        if se.code != 0:
+            raise Exception("Something went wrong!")
+    except:
+        print("Nothing!")
+        pass
