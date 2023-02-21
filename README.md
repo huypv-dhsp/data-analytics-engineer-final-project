@@ -10,8 +10,8 @@
     + Connection type: Postgres
     + Host: 34.136.101.135
     + Schema: thelook_ecommerce
-    + Login: postgres
-    + Password: <postgres password>
+    + Login: viewer
+    + Password: _\<password\>_ (ask admin to get)
     + Port: 5432
 - Then click Save button
 
@@ -21,5 +21,5 @@
 - Fill with information:
     + Connection id: google_cloud_default
     + Connection type: Google Cloud
-    + Project id: <Google Cloud project id>
+    + Project id: _\<your google project id\>_
 - Then click Save button
